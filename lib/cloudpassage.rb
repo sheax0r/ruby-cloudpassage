@@ -1,6 +1,17 @@
+require 'cloudpassage/cloudpassage'
 require 'cloudpassage/version'
 require 'cloudpassage/base'
+require 'cloudpassage/configuration_policies'
+require 'cloudpassage/events'
+require 'cloudpassage/file_integrity_baselines'
+require 'cloudpassage/file_integrity_policies'
+require 'cloudpassage/firewall_interfaces'
+require 'cloudpassage/firewall_policies'
+require 'cloudpassage/firewall_rules'
+require 'cloudpassage/firewall_services'
+require 'cloudpassage/firewall_zones'
+require 'cloudpassage/server_accounts'
+require 'cloudpassage/server_groups'
+require 'cloudpassage/servers'
+require 'cloudpassage/users'
 
-module Cloudpassage
-  # Your code goes here...
-end
