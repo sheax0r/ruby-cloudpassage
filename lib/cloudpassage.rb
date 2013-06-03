@@ -14,4 +14,5 @@ require 'cloudpassage/server_accounts'
 require 'cloudpassage/server_groups'
 require 'cloudpassage/servers'
 require 'cloudpassage/users'
+require 'cloudpassage/api'
 

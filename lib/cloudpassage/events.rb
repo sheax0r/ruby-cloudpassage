@@ -1,6 +1,6 @@
 module Cloudpassage
   class Events < Base
-    def type
+      def type
       'events'
     end
   end

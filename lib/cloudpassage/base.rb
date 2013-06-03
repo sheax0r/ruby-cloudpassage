@@ -7,7 +7,6 @@ module Cloudpassage
     end
 
     def json(operation, path, content=nil)
-      puts "path: #{path}"
       if content
         JSON.parse((RestClient.send(operation,
                                     "https://api.cloudpassage.com/v1/#{path}",
