@@ -1,7 +1,12 @@
 module Cloudpassage
   class FirewallZones < Base
-    def type
-      'firewall_zones'
+    include Collection
+
+    def singleton_class
+      FirewallZone
     end
+  end
+
+  class FirewallZone < Single
   end
 end

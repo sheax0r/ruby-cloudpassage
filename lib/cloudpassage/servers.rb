@@ -1,39 +1,46 @@
 module Cloudpassage
   class Servers < Base
-    attr_reader :group_id
-    def initialize(token, group_id)
-      super(token)
-      @group_id = group_id
+    include Collection
+
+    def singleton_class
+      Server
+    end
+  end
+
+  class Server < Single
+
+    def initialize(token, base_resource, id, data=nil)
+      @id = id
+      super(@token, RestClient::Resource.new("#{BASE_URL}/servers/"), @id, data)
     end
 
-    def base_path
-      "groups/#{group_id}/servers"
+    def issues
+      Issues.new(@token, @base_resource['issues'])
     end
 
-    def type
-      'servers'
+    def accounts
+      Accounts.new(@token, @base_resource['accounts'])
     end
+  end
 
-    def get(id)
-      json(:get, "#{type}/#{id}")
-    end
+  class Accounts < Base
+    include Collection
 
-    def search(options={})
-      if options[:group_id]
-        json(:get, "groups/#{options[:group_id]}/servers")
-      elsif options[:user_name]
-        json(:get, "servers?search[username]={#{username}}")
-      elsif options[:uid]
-        json(:get, "servers?search[uid]={#{uid}}")
-      end
+    def singleton_class
+      Account
     end
+  end
 
-    def set_group(server_id, group_id)
-      json(:put, "servers/#{server_id}", ({:server=>{:group_id=>group_id}}).to_json)
-    end
+  class Account < Single
+  end
 
-    def issues(server_id)
-      json(:get, "servers/#{server_id}/issues")
+  class Issues < Base
+    include Collection
+    def singleton_class
+      Issue
     end
+  end
+
+  class Issue < Single
   end
 end

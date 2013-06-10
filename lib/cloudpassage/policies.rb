@@ -1,12 +1,12 @@
 module Cloudpassage
-  class FirewallServices < Base
+  class Policies < Base
     include Collection
 
     def singleton_class
-      FirewallService
+      Policy
     end
   end
 
-  class FirewallService < Single
+  class Policy < Single
   end
 end

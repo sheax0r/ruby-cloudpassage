@@ -1,7 +1,12 @@
 module Cloudpassage
   class Users < Base
-    def type
-      'users'
+    include Collection
+
+    def singleton_class
+      User
     end
+  end
+
+  class User < Single
   end
 end

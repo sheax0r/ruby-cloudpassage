@@ -13,3 +13,14 @@ module Cloudpassage
     client.client_credentials.get_token.token
   end
 end
+
+# Add camel-to-snake-case conversion
+class String
+  def underscore
+    self.gsub(/::/, '/').
+        gsub(/([A-Z]+)([A-Z][a-z])/,'\1_\2').
+        gsub(/([a-z\d])([A-Z])/,'\1_\2').
+        tr("-", "_").
+        downcase
+  end
+end

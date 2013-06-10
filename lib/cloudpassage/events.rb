@@ -1,7 +1,12 @@
 module Cloudpassage
   class Events < Base
-      def type
-      'events'
+    include Collection
+
+    def singleton_class
+      Event
     end
+  end
+
+  class Event < Single
   end
 end

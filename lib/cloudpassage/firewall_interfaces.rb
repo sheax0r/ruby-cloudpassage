@@ -1,7 +1,11 @@
 module Cloudpassage
   class FirewallInterfaces < Base
-    def type
-      'firewall_interfaces'
+    include Collection
+    def singleton_class
+      FirewallInterface
     end
+  end
+
+  class FirewallInterface < Single
   end
 end
