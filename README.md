@@ -19,7 +19,7 @@ Or install it yourself as:
     $ gem install cloudpassage
 
 ## Usage
-  * Objects are all wrapprers around RestClient. Data is retrieved when the .data method is invoked.
+  * Objects are all wrappers around RestClient. Data is retrieved when the .data method is invoked.
   * This method returns a hash, parsed from the JSON data.
   * Data will not be retrieved until data is invoked.
   * Objects cache data until their reload method is invoked.
