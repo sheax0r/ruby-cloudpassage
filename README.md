@@ -53,7 +53,12 @@ Or install it yourself as:
   ...
 
   # Reload an object
-  users = api.users.all
+  users = api.users
+
+  # First load occurs here.
+  users.all
+
+  # Second load occurs here.
   users.reload
 
 ```
