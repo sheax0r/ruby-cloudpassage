@@ -52,7 +52,7 @@ Or install it yourself as:
   puts api.file_integrity_policies.get('file_integrity_policy_id').data.to_json
   ...
 
-  # Reload an object
+  # Reload an object:
   users = api.users
 
   # First load occurs here.
@@ -60,6 +60,11 @@ Or install it yourself as:
 
   # Second load occurs here.
   users.reload
+
+  # You can also reload single objects:
+  user = users.all[0]
+  user.reload
+
 
 ```
   
