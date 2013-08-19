@@ -9,7 +9,7 @@ module Cloudpassage
     end
 
     def get
-      base_resource.get(headers)
+      @base_resource.get(headers)
     end
   end
 end
