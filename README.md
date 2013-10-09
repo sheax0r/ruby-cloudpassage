@@ -71,7 +71,7 @@ Or install it yourself as:
 ### Allocating a user to login with on a server:
 ```ruby
   server = find_server_you_want_use_here
-  command_id = server.accounts.create('user', 'group')['command']['id'] # eg: group could be "wheel" if you need root access
+  command_id = server.accounts.create('user', 'group')['command']['id']
 
   begin
     command = server.command(command_id)
