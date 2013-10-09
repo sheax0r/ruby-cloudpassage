@@ -74,8 +74,8 @@ Or install it yourself as:
   command_id = server.accounts.create('user', 'group')['command']['id']
 
   begin
-    command = server.command(command_id)
-  end while not(command['id'] == 'completed')
+      command = server.command(command_id)
+  end while not(command.data[:status] == 'completed')
 
   # You can use this password to login as the user.
   password = command['password']
