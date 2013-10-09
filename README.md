@@ -25,7 +25,9 @@ Or install it yourself as:
   * Objects cache data until their reload method is invoked.
 
 ## Examples
-```
+
+### General Usage
+```ruby
   require 'cloudpassage'
   
   # Setup API client
@@ -64,10 +66,20 @@ Or install it yourself as:
   # You can also reload single objects:
   user = users.all[0]
   user.reload
-
-
 ```
-  
+
+### Allocating a user to login with on a server:
+```ruby
+  server = find_server_you_want_use_here
+  command_id = server.accounts.create('user', 'group')['command']['id'] # eg: group could be "wheel" if you need root access
+
+  begin
+    command = server.command(command_id)
+  end while not(command['id'] == 'completed')
+
+  # You can use this password to login as the user.
+  password = command['password']
+```
 
   
 ## Contributing
