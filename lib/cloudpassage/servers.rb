@@ -18,16 +18,26 @@ module Cloudpassage
     end
 
     def accounts
-      Accounts.new(@token, @base_resource['accounts'])
+      Accounts.new(self, @token, @base_resource['accounts'])
+    end
+
+
+    def commands
+      Commands.new(@token, @base_resource['commands'])
     end
 
     def command(id)
-      Command.new(@token, @base_resource['commands'], id)
+      commands.get(id)
     end
   end
 
   class Accounts < Base
     include Collection
+
+    def initialize(server, token, base_resource, data=nil)
+      @server = server
+      super(token, base_resource, data)
+    end
 
     def singleton_class
       Account
@@ -44,7 +54,7 @@ module Cloudpassage
         :groups   => groups,
         :password => password_opts.merge(opts.fetch(:password, {})),
       }}
-      JSON.parse(@base_resource.post payload.to_json, headers)
+      @server.commands.get(post(payload)['command']['id'])
     end
 
     def reset(username, opts = {})
@@ -76,6 +86,14 @@ module Cloudpassage
 
     def singleton_class
       Issue
+    end
+  end
+
+  class Commands < Base
+    include Collection
+
+    def singleton_class
+      Command
     end
   end
 

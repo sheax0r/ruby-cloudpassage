@@ -1,4 +1,15 @@
+require 'wait'
+
 module Cloudpassage
+  def self.wait_options
+    {
+      :attempts => 50000,
+      :timeout  => 60,
+      :delay    => 5,
+      :debug    => false
+    }
+  end
+
   class Base
     def initialize(token, base_resource, data=nil)
       @token = token
@@ -23,11 +34,23 @@ module Cloudpassage
     end
 
     def method_missing(sym, *args, &block)
-      if (@data[sym])
-        @data[sym]
+      if (data && data[sym])
+        data[sym]
       else
         super(sym, *args, &block)
       end
+    end
+
+    # Allows us to use any one of:
+    # object.id
+    # object['id']
+    # object[:id]
+    def [](key)
+      data[key.to_sym]
+    end
+
+    def post(payload)
+      JSON.parse(@base_resource.post payload.to_json, headers)
     end
 
     # Convert class name to symbol.
@@ -38,5 +61,11 @@ module Cloudpassage
       class_name[index+2..-1].underscore.to_sym
     end
 
+    def wait_for(options={}, &block)
+      Wait.new(Cloudpassage::wait_options.merge(options)).until do
+        reload
+        instance_eval &block
+      end
+    end
   end
 end

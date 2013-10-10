@@ -1,3 +1,5 @@
+require 'json'
+
 module Cloudpassage
   module Collection
     def all
@@ -12,6 +14,10 @@ module Cloudpassage
 
     def [](id)
       get(id)
+    end
+
+    def to_s
+      data.to_s
     end
   end
 end

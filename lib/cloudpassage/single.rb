@@ -1,3 +1,5 @@
+require  'json'
+
 module Cloudpassage
   class Single < Base
 
