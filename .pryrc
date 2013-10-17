@@ -1,2 +1,2 @@
 require 'cloudpassage/pry'
-include Cloudpassage::Pry
+extend Cloudpassage::Pry

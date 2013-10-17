@@ -1,4 +1,5 @@
 require File.join(File.dirname(__FILE__), '..', 'lib', 'cloudpassage')
+require File.join(File.dirname(__FILE__), '..', 'lib', 'cloudpassage', 'pry')
 require 'rspec'
 
 module Cloudpassage
@@ -6,8 +7,7 @@ module Cloudpassage
     attr_reader :api
 
     before :each do
-      token = Cloudpassage.token(ENV.fetch('CLOUDPASSAGE_ID'), ENV.fetch('CLOUDPASSAGE_SECRET'))
-      @api =  Cloudpassage::Api.new(token)
+      @api = Cloudpassage::Pry::cloudpassage(:test)
     end
 
     def self.collections
