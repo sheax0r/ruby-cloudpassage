@@ -2,7 +2,7 @@ require 'yaml'
 require 'cloudpassage'
 
 module Cloudpassage::Pry
-  def self.cloudpassage(type)
+  def cloudpassage(type)
     type_section = Cloudpassage::Pry::section(type)
     Cloudpassage::Api.new(Cloudpassage.token(type_section['id'], type_section['secret']))
   end
