@@ -1,4 +1,6 @@
 module Cloudpassage
+
+  # Firewall Services
   class FirewallServices < Base
     include Collection
 

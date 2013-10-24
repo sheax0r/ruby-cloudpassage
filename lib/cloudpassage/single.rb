@@ -1,6 +1,8 @@
 require  'json'
 
 module Cloudpassage
+
+  # Single objects.
   class Single < Base
 
     attr_reader :id

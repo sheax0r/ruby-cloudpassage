@@ -1,4 +1,5 @@
 module Cloudpassage
+  # File Interity Baselines
   class FileIntegrityBaselines < Base
     include Collection
 

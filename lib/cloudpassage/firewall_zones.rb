@@ -1,4 +1,6 @@
 module Cloudpassage
+
+  # Firewall Zones
   class FirewallZones < Base
     include Collection
 

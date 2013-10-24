@@ -1,4 +1,5 @@
 module Cloudpassage
+  # FimPolicies
   class FimPolicies < Base
     include Collection
 

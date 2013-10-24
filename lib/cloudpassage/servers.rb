@@ -31,6 +31,7 @@ module Cloudpassage
     end
   end
 
+  # Accounts on a server
   class Accounts < Base
     include Collection
 
@@ -44,9 +45,12 @@ module Cloudpassage
     end
 
     def all
-      data.map{|i| get(i[:username], i)}
+      data.map{ |i| get(i[:username], i) }
     end
 
+    # Creates username, in the given group.
+    # If opts[:password] is specified, that password will be used.
+    # Otherwise, password will be generated.
     def create(username, groups = '', opts = {})
       payload = {'account' => {
         :username => username,

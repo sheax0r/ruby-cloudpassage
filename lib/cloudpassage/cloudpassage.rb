@@ -5,6 +5,7 @@ require 'json'
 module Cloudpassage
   RestClient.proxy = ENV['HTTPS_PROXY'] if ENV['HTTPS_PROXY'].to_s.length > 0
 
+  # Obtain an oauth token using id and secret
   def self.token(client_id, client_secret)
     client = OAuth2::Client.new(client_id, client_secret,
                                 :connection_opts => { :proxy => ENV['HTTPS_PROXY'] },
@@ -16,11 +17,12 @@ end
 
 # Add camel-to-snake-case conversion
 class String
+
+  # returns camel-case representation of snake-case string.
   def underscore
     self.gsub(/::/, '/').
-        gsub(/([A-Z]+)([A-Z][a-z])/,'\1_\2').
-        gsub(/([a-z\d])([A-Z])/,'\1_\2').
-        tr("-", "_").
-        downcase
+        gsub(/([A-Z]+)([A-Z][a-z])/, '\1_\2').
+        gsub(/([a-z\d])([A-Z])/, '\1_\2').
+        tr('-', '_').downcase
   end
 end

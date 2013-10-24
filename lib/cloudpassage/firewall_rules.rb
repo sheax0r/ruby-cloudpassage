@@ -1,4 +1,6 @@
 module Cloudpassage
+
+  # Firewall Rules
   class FirewallRules < Base
     include Collection
 

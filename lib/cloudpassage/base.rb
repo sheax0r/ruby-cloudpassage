@@ -1,6 +1,8 @@
 require 'wait'
 
 module Cloudpassage
+
+  # Default options to use when waiting.
   def self.wait_options
     {
       :attempts => 50000,
@@ -10,6 +12,7 @@ module Cloudpassage
     }
   end
 
+  # Base class representing cloudpassage objects.
   class Base
     def initialize(token, base_resource, data=nil)
       @token = token
@@ -17,6 +20,8 @@ module Cloudpassage
       @data = data
     end
 
+    # Return data from sending http GET to underlying resource.
+    # Uses cached value if resource has been retrieved already.
     def data
       if @data.nil?
         @data = JSON.parse(@base_resource.get(headers), :symbolize_names=>true)[object_symbol]
@@ -33,6 +38,7 @@ module Cloudpassage
       {'Authorization'=>"Bearer #{@token}"}
     end
 
+    # If method is missing, try to pass through to underlying data hash.
     def method_missing(sym, *args, &block)
       if (data && data[sym])
         data[sym]
@@ -58,9 +64,12 @@ module Cloudpassage
     def object_symbol
       class_name = self.class.name
       index = class_name.rindex(/::/)
-      class_name[index+2..-1].underscore.to_sym
+      class_name[index + 2 .. -1].underscore.to_sym
     end
 
+    # Wait for block to evaluate to true.
+    # If specified, options can be used to override default options.
+    # Options should conform to https://rubygems.org/gems/wait
     def wait_for(options={}, &block)
       Wait.new(Cloudpassage::wait_options.merge(options)).until do
         reload

@@ -1,4 +1,6 @@
 module Cloudpassage
+
+  # Policies
   class Policies < Base
     include Collection
 

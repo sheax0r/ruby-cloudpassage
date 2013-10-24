@@ -1,4 +1,6 @@
 module Cloudpassage
+
+  # Groups
   class Groups < Base
     include Collection
     def singleton_class

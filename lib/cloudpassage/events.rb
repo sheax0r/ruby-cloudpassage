@@ -1,4 +1,6 @@
 module Cloudpassage
+
+  # Events
   class Events < Base
     include Collection
 

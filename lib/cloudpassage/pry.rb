@@ -1,6 +1,7 @@
 require 'yaml'
 require 'cloudpassage'
 
+# Module to make it easy to use stuff from pry (or any sort of interactive debugger)
 module Cloudpassage::Pry
   def cloudpassage(type)
     type_section = Cloudpassage::Pry::section(type)

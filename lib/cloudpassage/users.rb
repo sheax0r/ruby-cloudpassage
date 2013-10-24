@@ -1,4 +1,5 @@
 module Cloudpassage
+  # Users
   class Users < Base
     include Collection
 
