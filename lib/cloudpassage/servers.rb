@@ -45,7 +45,7 @@ module Cloudpassage
     end
 
     def all
-      data.map{ |i| get(i[:username], i) }
+      data.map { |i| get(i[:username], i) }
     end
 
     # Creates username, in the given group.

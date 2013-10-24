@@ -5,7 +5,7 @@ module Cloudpassage
   # Collections of objects.
   module Collection
     def all
-      data.map{ |i| get(i[:id], i) }
+      data.map { |i| get(i[:id], i) }
     end
 
     def get(id, data=nil)

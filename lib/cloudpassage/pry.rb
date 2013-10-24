@@ -13,7 +13,7 @@ module Cloudpassage::Pry
   end
 
   def self.yaml
-    @@yaml ||= YAML.load(File.read(config_file))
+    @yaml ||= YAML.load(File.read(config_file))
   end
 
   def self.config_file
