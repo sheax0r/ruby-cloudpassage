@@ -2,9 +2,15 @@ module Cloudpassage
   class Servers < Base
     include Collection
 
+    def filter(options={})
+        servers = JSON.parse(@base_resource.get(headers.merge(:params=>options)), :symbolize_names=>true)[:servers]
+        servers.map { |i| get(i[:id], i) }
+    end
+
     def singleton_class
       Server
     end
+
   end
 
   class Server < Single
@@ -21,6 +27,21 @@ module Cloudpassage
       Accounts.new(self, @token, @base_resource['accounts'])
     end
 
+    def destroy
+      RestClient.delete "#{@base_resource}", headers
+    end
+
+    def retired
+      # retire a 'inactive' server
+      payload = {"server"=>{"retire"=>true}}
+      @base_resource.put(payload.to_json, headers.merge(:content_type => :json))
+    end
+
+    def group=(group_id)
+      # add server to group
+      payload = {"server"=>{"group_id"=>group_id}}
+      @base_resource.put(payload.to_json, headers.merge(:content_type => :json))
+    end
 
     def commands
       Commands.new(@token, @base_resource['commands'])

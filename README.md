@@ -49,6 +49,18 @@ Or install it yourself as:
   puts api.servers.all[0].accounts.all
   puts api.servers.all[0].issues.all
   puts api.server_groups.all[0].groups.all
+
+  # Add/move a server to a group (groups are case-sensitive)
+  puts api.servers.all.detect{|s|s.data[:hostname]=='server1.example.com'}.group('My_APP_SERVERS')
+
+  # List servers by passing in state (missing, deactivated, active)
+  api.servers.filter(:state=>'missing')
+
+  # Delete a server permanently
+  api.servers.get('id').destroy
+
+  # Retire a 'inactive' server
+  api.servers.get('id').retire
       
   # Get specific things.
   puts api.file_integrity_policies.get('file_integrity_policy_id').data.to_json
