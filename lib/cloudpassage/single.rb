@@ -15,5 +15,9 @@ module Cloudpassage
     def get
       @base_resource.get(headers)
     end
+
+    def destroy
+      @base_resource.delete(headers)
+    end
   end
 end

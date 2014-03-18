@@ -51,7 +51,7 @@ Or install it yourself as:
   puts api.server_groups.all[0].groups.all
 
   # Add/move a server to a group (groups are case-sensitive)
-  puts api.servers.all.detect{|s|s.data[:hostname]=='server1.example.com'}.group('My_APP_SERVERS')
+  api.servers.get('some_id').group='some_group_id'
 
   # List servers by passing in state (missing, deactivated, active)
   api.servers.filter(:state=>'missing')

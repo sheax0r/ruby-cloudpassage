@@ -27,11 +27,7 @@ module Cloudpassage
       Accounts.new(self, @token, @base_resource['accounts'])
     end
 
-    def destroy
-      RestClient.delete "#{@base_resource}", headers
-    end
-
-    def retired
+    def retire
       # retire a 'inactive' server
       payload = {"server"=>{"retire"=>true}}
       @base_resource.put(payload.to_json, headers.merge(:content_type => :json))
