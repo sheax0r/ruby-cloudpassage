@@ -75,7 +75,7 @@ module Cloudpassage
         :comment  => '',
         :groups   => groups,
         :password => password_opts.merge(opts.fetch(:password, {})),
-        :ssh_authorized_keys => ssh_keys_options(opts)
+        :ssh_authorized_keys => ssh_keys_opts(opts)
       }}
       @server.commands.get(post(payload)['command']['id'])
     end
