@@ -3,8 +3,8 @@ module Cloudpassage
     include Collection
 
     def filter(options={})
-        servers = JSON.parse(@base_resource.get(headers.merge(:params=>options)), :symbolize_names=>true)[:servers]
-        servers.map { |i| get(i[:id], i) }
+      servers = JSON.parse(@base_resource.get(headers.merge(:params=>options)), :symbolize_names=>true)[:servers]
+      servers.map { |i| get(i[:id], i) }
     end
 
     def singleton_class
@@ -68,12 +68,14 @@ module Cloudpassage
     # Creates username, in the given group.
     # If opts[:password] is specified, that password will be used.
     # Otherwise, password will be generated.
+    # If opts
     def create(username, groups = '', opts = {})
       payload = {'account' => {
         :username => username,
         :comment  => '',
         :groups   => groups,
         :password => password_opts.merge(opts.fetch(:password, {})),
+        :ssh_authorized_keys => ssh_keys_options(opts)
       }}
       @server.commands.get(post(payload)['command']['id'])
     end
@@ -100,6 +102,12 @@ module Cloudpassage
         :include_uppercase  => true
       }
     end
+
+    def ssh_keys_opts(opts)
+      keys = opts.fetch(:keys, [])
+      keys.map{|k|{:key=>k}}
+    end
+
   end
 
   class Issues < Base

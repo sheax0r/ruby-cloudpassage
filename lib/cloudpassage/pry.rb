@@ -3,7 +3,7 @@ require 'cloudpassage'
 
 # Module to make it easy to use stuff from pry (or any sort of interactive debugger)
 module Cloudpassage::Pry
-  def cloudpassage(type)
+  def self.cloudpassage(type)
     type_section = Cloudpassage::Pry::section(type)
     Cloudpassage::Api.new(Cloudpassage.token(type_section['id'], type_section['secret']))
   end

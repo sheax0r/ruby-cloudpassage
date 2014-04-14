@@ -1,3 +1,4 @@
+require 'cloudpassage'
 module Cloudpassage
 
   # Policies

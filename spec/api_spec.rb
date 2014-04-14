@@ -1,5 +1,6 @@
-require File.join(File.dirname(__FILE__), '..', 'lib', 'cloudpassage')
-require File.join(File.dirname(__FILE__), '..', 'lib', 'cloudpassage', 'pry')
+$:.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
+
+require'cloudpassage/pry'
 require 'rspec'
 
 module Cloudpassage
@@ -7,20 +8,23 @@ module Cloudpassage
     attr_reader :api
 
     before :each do
-      @api = Cloudpassage::Pry::cloudpassage(:test)
+      Cloudpassage.stub(:token){ 'token' }
+      Cloudpassage::Pry.stub(:yaml){({'test'=>{'id'=>'id', 'secret'=>'secret'}})}
+      @api = Cloudpassage::Pry.cloudpassage(:test)
+      RestClient::Resource.stub(:new){resource}
     end
 
     def self.collections
       [
-          :configuration_policies,
-          :events,
-          :file_integrity_policies,
-          :firewall_interfaces,
-          :firewall_policies,
-          :firewall_services,
-          :firewall_zones,
-          :server_groups,
-          :users
+        :configuration_policies,
+        :events,
+        :file_integrity_policies,
+        :firewall_interfaces,
+        :firewall_policies,
+        :firewall_services,
+        :firewall_zones,
+        :server_groups,
+        :users
       ]
     end
 
@@ -28,13 +32,11 @@ module Cloudpassage
       it "should retrieve data for #{type}" do
         api.send(type).data
       end
+    end
 
-      it "should parse data for #{type} as json" do
-        # Get the collection
-        collection = api.send(type)
-
-        # Reload a single instance of each object type.
-        collection.all[0].reload.data
+    def resource
+      @resource ||= double('resource').tap do |r|
+        r.stub(:get=>'{}')
       end
     end
   end
