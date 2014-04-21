@@ -70,14 +70,25 @@ module Cloudpassage
     # Otherwise, password will be generated.
     # If opts
     def create(username, groups = '', opts = {})
-      payload = {'account' => {
-        :username => username,
-        :comment  => '',
-        :groups   => groups,
-        :password => password_opts.merge(opts.fetch(:password, {})),
-        :ssh_authorized_keys => ssh_keys_opts(opts)
-      }}
+      payload = {
+        :account => {
+          :username => username,
+          :comment  => '',
+          :groups   => groups,
+          :password => password_opts.merge(opts.fetch(:password, {}))
+        }
+      }
       @server.commands.get(post(payload)['command']['id'])
+    end
+
+    def set_ssh_keys(username, *keys)
+      keys = *keys
+      payload = {
+        :account => {
+          :ssh_authorized_keys => keys.map{|k|{:key=>k}}
+        }
+      }
+      @server.commands.get(JSON.parse(@base_resource[username].put(payload.to_json, headers))['command']['id'])
     end
 
     def reset(username, opts = {})
@@ -135,4 +146,5 @@ module Cloudpassage
 
   class Issue < Single;end
   class Account < Single;end
+
 end

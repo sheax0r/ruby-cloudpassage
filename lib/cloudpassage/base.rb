@@ -59,6 +59,10 @@ module Cloudpassage
       JSON.parse(@base_resource.post payload.to_json, headers)
     end
 
+    def put(payload)
+      JSON.parse(@base_resource.put payload.to_json, headers)
+    end
+
     # Convert class name to symbol.
     # eg: CloudPassage::Users --> :users
     def object_symbol
