@@ -91,6 +91,16 @@ module Cloudpassage
       @server.commands.get(JSON.parse(@base_resource[username].put(payload.to_json, headers))['command']['id'])
     end
 
+    def enable_account(username)
+      payload = {:account => {:active=>true}}
+      @server.commands.get(json.parse(@base_resource[username].put(payload.to_json, headers))['command']['id'])
+    end
+
+    def disable_account(username)
+      payload = {:account => {:active=>false}}
+      @server.commands.get(json.parse(@base_resource[username].put(payload.to_json, headers))['command']['id'])
+    end
+
     def reset(username, opts = {})
       payload = {'password' => password_opts.merge(opts)}
       JSON.parse @base_resource[username]['password'].put(payload.to_json, headers)
