@@ -71,12 +71,19 @@ module Cloudpassage
       class_name[index + 2 .. -1].underscore.to_sym
     end
 
+    # Return true if object exists in the cloudpassage API, false otherwise.
+    def exists?
+      @base_resource.get(headers)
+      true
+    rescue RestClient::ResourceNotFound
+      false
+    end
+
     # Wait for block to evaluate to true.
     # If specified, options can be used to override default options.
     # Options should conform to https://rubygems.org/gems/wait
     def wait_for(options={}, &block)
       Wait.new(Cloudpassage::wait_options.merge(options)).until do
-        reload
         instance_eval &block
       end
     end

@@ -98,16 +98,16 @@ module Cloudpassage
 
     def disable_account(username)
       payload = {:account => {:active=>false}}
-      @server.commands.get(JSON.parse(@base_resource[username].put(payload.to_json, headers))['command']['id'])
+      @server..get(JSON.parse(@base_resource[username].put(payload.to_json, headers))['command']['id'])
     end
 
     def reset(username, opts = {})
       payload = {'password' => password_opts.merge(opts)}
-      JSON.parse @base_resource[username]['password'].put(payload.to_json, headers)
+      @server.commands.get(JSON.parse(@base_resource[username]['password'].put(payload.to_json, headers))['command']['id'])
     end
 
     def remove(username)
-      JSON.parse @base_resource[username].delete(headers)
+      @server.commands.get(JSON.parse(@base_resource[username].delete(headers))['command']['id'])
     end
 
     def headers
@@ -149,8 +149,12 @@ module Cloudpassage
 
   class Command < Single
     def done?
-      self.reload
-      %w'completed failed'.include? self.status
+      reload
+      fail Error.new(self.result) if status == 'failed'
+      'completed' == status
+    end
+
+    class Error < StandardError
     end
   end
 
